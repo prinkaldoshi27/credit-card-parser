@@ -1,0 +1,125 @@
+<!doctype html>
+<title>Statement Processor - Secure Upload</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+    body {
+        background-color: #f0f2f5;
+    }
+
+    .card-header-professional {
+        background-color: #1a3a5e;
+        /* Deep Navy Blue */
+        color: white;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        border-bottom: none;
+    }
+
+    .btn-professional {
+        background-color: #4285f4;
+        /* Subtle Google-like Blue for action */
+        border-color: #4285f4;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-professional:hover {
+        background-color: #3367d6;
+        border-color: #3367d6;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .file-upload-box {
+        border: 2px dashed #ccc;
+        border-radius: .5rem;
+        padding: 30px;
+        text-align: center;
+        cursor: pointer;
+        transition: border-color 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .file-upload-box:hover {
+        border-color: #1a3a5e;
+    }
+
+    .file-input {
+        opacity: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        cursor: pointer;
+    }
+
+    #file-name-display {
+        font-weight: 600;
+        color: #1a3a5e;
+        /* Highlight color for the selected file name */
+    }
+</style>
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header card-header-professional text-center py-4 rounded-top-4">
+                    <h2 class="mb-0"><i class="bi bi-file-earmark-text me-2"></i> Document Processing Engine</h2>
+                </div>
+                <div class="card-body p-5">
+                    <p class="card-text text-muted mb-4 text-center">Securely upload a credit card statement PDF for
+                        automated data extraction and analysis.</p>
+
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="mb-4">
+                            <label for="file" class="form-label visually-hidden">Select PDF File:</label>
+                            <div class="file-upload-box">
+                                <i id="upload-icon" class="bi bi-cloud-arrow-up-fill text-muted fs-1 mb-3"></i>
+                                <input type="file" name="file" id="file-input" class="file-input" accept=".pdf"
+                                    required>
+
+                                <p class="text-secondary mb-0">
+                                    <span id="file-name-display">Drag & drop or click to select PDF</span>
+                                </p>
+                                <small class="text-danger">Max size: 5MB | Format: PDF Only</small>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-professional btn-lg w-100 text-white mt-3">
+                            <i class="bi bi-search me-2"></i> Begin Extraction
+                        </button>
+                    </form>
+                </div>
+                <div class="card-footer text-center text-muted bg-light border-0 rounded-bottom-4">
+                    <small>Assignment Brief: Extracts 5 key data points across 5 major issuers.</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('file-input').addEventListener('change', function () {
+        const input = this;
+        const fileNameDisplay = document.getElementById('file-name-display');
+        const uploadIcon = document.getElementById('upload-icon');
+
+        if (input.files && input.files.length > 0) {
+            // Display the file name
+            fileNameDisplay.textContent = input.files[0].name;
+
+            // Change icon to a checkmark or document icon
+            uploadIcon.className = 'bi bi-file-earmark-check-fill text-success fs-1 mb-3';
+
+            // Subtle visual cue on the container
+            input.closest('.file-upload-box').style.borderColor = '#28a745';
+        } else {
+            // Reset state if selection is canceled
+            fileNameDisplay.textContent = 'Drag & drop or click to select PDF';
+            uploadIcon.className = 'bi bi-cloud-arrow-up-fill text-muted fs-1 mb-3';
+            input.closest('.file-upload-box').style.borderColor = '#ccc';
+        }
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

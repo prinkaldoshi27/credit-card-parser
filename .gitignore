@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+.env
+
+# Flask/Temporary
+uploads/
+*.log
+instance/
+
+# Operating System files
+.DS_Store
+Thumbs.db
