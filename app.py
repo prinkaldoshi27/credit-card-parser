@@ -2,17 +2,15 @@ import os
 import re
 import uuid
 import pdfplumber
+import tempfile
 from flask import Flask, render_template, request, redirect, url_for
 
-UPLOAD_FOLDER = 'uploads'
+UPLOAD_FOLDER = tempfile.gettempdir()
 ALLOWED_EXTENSIONS = {'pdf'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024 
-
-if not os.path.exists(UPLOAD_FOLDER):
-    os.makedirs(UPLOAD_FOLDER)
     
 def allowed_file(filename):
     return '.' in filename and \
@@ -217,7 +215,7 @@ def upload_file():
             secure_filename = str(uuid.uuid4()) + '.' + file_extension
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename)
             try:
-                file.save(file_path)
+                file.save(file_path) # File is saved to the writable /tmp directory
                 issuer = determine_issuer(file_path)
                 with pdfplumber.open(file_path) as pdf:
                     full_text = "".join(page.extract_text() for page in pdf.pages)
@@ -245,7 +243,7 @@ def upload_file():
                 return render_template('results.html', error=error_message, filename=original_filename)
             finally:
                 if os.path.exists(file_path):
-                    os.remove(file_path)
+                                    os.remove(file_path)
         else:
             return render_template('results.html', error="Invalid file format. Please upload a PDF file.", filename=original_filename)
     return render_template('upload.html')
