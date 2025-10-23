@@ -1,5 +1,2 @@
+Flask
 pdfplumber
-python-dateutil
-pdf2image
-pytesseract
-pandas
