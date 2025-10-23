@@ -249,6 +249,3 @@ def upload_file():
         else:
             return render_template('results.html', error="Invalid file format. Please upload a PDF file.", filename=original_filename)
     return render_template('upload.html')
-
-if __name__ == '__main__':
-    app.run(debug=True)
